@@ -1,0 +1,62 @@
+-- The C compiler identification is GNU 7.5.0
+-- The CXX compiler identification is GNU 7.5.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc - works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ - works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 0.8.2 (/opt/ros/eloquent/share/ament_cmake/cmake)
+-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.6.9", minimum required is "3") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Found rclcpp: 0.8.4 (/opt/ros/eloquent/share/rclcpp/cmake)
+-- Found rosidl_adapter: 0.8.2 (/opt/ros/eloquent/share/rosidl_adapter/cmake)
+-- Found rmw_implementation_cmake: 0.8.1 (/opt/ros/eloquent/share/rmw_implementation_cmake/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Found std_msgs: 0.8.1 (/opt/ros/eloquent/share/std_msgs/cmake)
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/philipp/cecar-technology/ros2_ws/build/node-configuration_example
+[35m[1mScanning dependencies of target listener[0m
+[35m[1mScanning dependencies of target talker[0m
+[ 25%] [32mBuilding CXX object CMakeFiles/listener.dir/src/demo_subscriber.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/talker.dir/src/demo_publisher.cpp.o[0m
+[ 75%] [32m[1mLinking CXX executable talker[0m
+[ 75%] Built target talker
+[100%] [32m[1mLinking CXX executable listener[0m
+[100%] Built target listener
+-- Install configuration: ""
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/lib/$[PROJECT_NAME}/talker
+-- Set runtime path of "/home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/lib/$[PROJECT_NAME}/talker" to ""
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/lib/$[PROJECT_NAME}/listener
+-- Set runtime path of "/home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/lib/$[PROJECT_NAME}/listener" to ""
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/ament_index/resource_index/package_run_dependencies/node-configuration_example
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/ament_index/resource_index/parent_prefix_path/node-configuration_example
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/environment/ament_prefix_path.sh
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/environment/ament_prefix_path.dsv
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/environment/path.sh
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/environment/path.dsv
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/local_setup.bash
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/local_setup.sh
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/local_setup.zsh
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/local_setup.dsv
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/package.dsv
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/ament_index/resource_index/packages/node-configuration_example
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/cmake/node-configuration_exampleConfig.cmake
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/cmake/node-configuration_exampleConfig-version.cmake
+-- Installing: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/package.xml

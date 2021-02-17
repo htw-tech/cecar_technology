@@ -1,0 +1,34 @@
+-- Found ament_cmake: 0.8.2 (/opt/ros/eloquent/share/ament_cmake/cmake)
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found rclcpp: 0.8.4 (/opt/ros/eloquent/share/rclcpp/cmake)
+-- Found rosidl_adapter: 0.8.2 (/opt/ros/eloquent/share/rosidl_adapter/cmake)
+-- Found rmw_implementation_cmake: 0.8.1 (/opt/ros/eloquent/share/rmw_implementation_cmake/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found std_msgs: 0.8.1 (/opt/ros/eloquent/share/std_msgs/cmake)
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/philipp/cecar-technology/ros2_ws/build/node-configuration_example
+[ 50%] [32m[1mLinking CXX executable talker[0m
+[ 50%] [32m[1mLinking CXX executable listener[0m
+[ 75%] Built target talker
+[100%] Built target listener
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/lib/node-configuration_example/talker
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/lib/node-configuration_example/listener
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/ament_index/resource_index/package_run_dependencies/node-configuration_example
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/ament_index/resource_index/parent_prefix_path/node-configuration_example
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/environment/ament_prefix_path.sh
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/environment/ament_prefix_path.dsv
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/environment/path.sh
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/environment/path.dsv
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/local_setup.bash
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/local_setup.sh
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/local_setup.zsh
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/local_setup.dsv
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/package.dsv
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/ament_index/resource_index/packages/node-configuration_example
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/cmake/node-configuration_exampleConfig.cmake
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/cmake/node-configuration_exampleConfig-version.cmake
+-- Symlinking: /home/philipp/cecar-technology/ros2_ws/install/node-configuration_example/share/node-configuration_example/package.xml

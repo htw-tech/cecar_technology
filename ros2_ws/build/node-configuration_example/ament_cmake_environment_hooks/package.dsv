@@ -1,0 +1,4 @@
+source;share/node-configuration_example/local_setup.bash
+source;share/node-configuration_example/local_setup.dsv
+source;share/node-configuration_example/local_setup.sh
+source;share/node-configuration_example/local_setup.zsh

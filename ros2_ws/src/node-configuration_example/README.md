@@ -10,15 +10,18 @@ For a detailed introdution to ROS2 concepts and tutorials visit: https://index.r
 
 
 ![Node Concept](./documentation/node_grafik.png)  
+
 (source: https://index.ros.org/doc/ros2/Tutorials/Understanding-ROS2-Nodes/)  
 
 As the CeCar platform uses ROS2 as a middleware, all software building blocks in this platform are provided as ROS2 packages. Hence, all software systems are represented by at least one Node. Since the CeCar platform aims towards a configurable software and hardware environment, changes in data sources (sensor, simulation, etc.) or hardware components may occur. Due to these possible changes a configuration of ROS2 interfaces (Topics, Services) can be necessary.
+
+This project aims towards an introduction into the possibilities of configuration of Nodes after they have been built. For this purpose, the example project was created and will be explained in the next section.
 
 ## Configuration Example
 
 To demonstrate the configuration process for existing  ROS2 Nodes, this demo package was created.  
 
-The package contains a simple *talker* and *listener* Node. The *talker* will publish string messages at the topic */topic* and the *listener* will receive those messages.  
+The package contains a simple `talker` and `listener` Node. The `talker` will publish string messages at the topic `/topic` and the `listener` will receive those messages.  
 
 To start the Nodes open a new terminal (if you have not already cloned the repository, clone it first).  
 In the terminal run the listener:
@@ -44,7 +47,7 @@ The picture below shows the resulting Rosgraph.
 There are several options to configure this standard setup. The Nodes can be embedded into namespaces, as well as the topics. Furthermore the topic name can be changed.  
 This configuration can be realized by modifying the source files for the Nodes accordingly. That would require the package to be rebuild afterwards.  
 
-A more convenient way is the configuration with the use of *launch* files. Launch files are a basic ROS2 concept for starting and configuration of multiple Nodes at the same time. Such a demo launch file (demo.launch.py) can be found in the launch folder of this package. ROS2 uses python scripts as launch files.  
+A more convenient way is the configuration with the use of *launch* files. Launch files are a basic ROS2 concept for starting and configuring multiple Nodes at the same time. Such a demo launch file ([demo.launch.py](./launch/demo.launch.py)) can be found in the [launch](./launch) folder of this package. ROS2 uses python scripts as launch files.  
 
 The content of *demo.launch.py* is shown below:
 ```python
@@ -81,16 +84,17 @@ def generate_launch_description():
 ```
 
 This launch file configures the Node interfaces and names before starting. It uses *LaunchArguments* to enable parameterization of the launch file from the command line.  
-There are two *LaunchArguments*: *'ns'* for the namespace to start the two nodes in and *'topic_name'* for the topic the Nodes use to communicate. Furthermore a launch file can be changed without the need for a rebuild of the package. You just need to source the ROS2 workspace again (*soure install/setup.bash*).
+There are two *LaunchArguments*: *'ns'* for the namespace to start the two nodes in and *'topic_name'* for the topic the Nodes use to communicate. Furthermore a launch file can be changed without the need for a rebuild of the package. You just need to source the ROS2 workspace again (`. install/setup.bash`).
 
-The launch file starts both nodes an can be called from the command line. The *LaunchArgument* for the namespace is mandatory, since the use of multiple CeCars requires running their Nodes in different namespaces.  
+The launch file starts both nodes and can be called from the command line. The *LaunchArgument* for the namespace is mandatory (no `defaul_value` is given for the *launchArgument* in the launch file), since the use of multiple CeCars requires running their Nodes in different namespaces.  
 
-The basic way to start the launch file is:
+The basic way to start the launch file is:  
+(**in a new terminal or after changing the launch file always source the workspace first:** `. install/setup.bash`)
 
 ```shell
 ros2 launch node-configuration_example demo.launch.py ns:="noah"
 ```
-This starts both Nodes in the namespace */noah*. The resulting rosgraph is shown below:  
+This starts both Nodes in the namespace `/noah`. The resulting rosgraph is shown below:  
 
 ![Rosgraph configured 1](./documentation/rosgraph_configured1.png)  
 
@@ -100,7 +104,7 @@ You can change the name of the used topic with this launch file as well:
 ros2 launch node-configuration_example demo.launch.py ns:="noah" topic_name:="hello_world_topic"
 ```
 
-This starts again both Nodes in the namespace */noah* but additionally renames the topic to *hello_world_topic*. Since you give a relative topic name with this command, the resulting topic will be placed in the namespace as well. The resulting rosgraph is shown below:  
+This starts again both Nodes in the namespace `/noah` but additionally renames the topic to `hello_world_topic`. Since you give a relative topic name with this command, the resulting topic will be placed in the namespace as well. The resulting rosgraph is shown below:  
 
 ![Rosgraph configured 2](./documentation/rosgraph_configured2.png)  
 
@@ -115,3 +119,18 @@ By giving an absolute topic name as an argument to the launch file, the topic wi
 ![Rosgraph configured 3](./documentation/rosgraph_configured3.png) 
 
 ## CeCar Conventions
+
+In this section some general conventions for Node configurations in CeCar applications are defined.  
+For a detailed overview on CeCar coding and naming conventions see [Coding Guidelines](https://gitlab.rz.htw-berlin.de/se_cecar/cecar-technology/-/wikis/Coding%20Guidelines).  
+
+For CeCar applications the following conventions shall be considered:  
+1. **Start ROS2 Nodes in a seperate namespace on every vehicle.**  
+     Good practice is to use the name of the vehicle (see [Overview CeCars](https://gitlab.rz.htw-berlin.de/se_cecar/cecar-technology/-/wikis/Overview%20CeCars) for more information) as the namespace, e.g. `/anna`.  
+2. **Use further Sub-Namespaces for different applications/systems.**  
+     E.g. `/<vehicle name>/zedcam` for Nodes related to the ZedCam.  
+3. **Group topics/services into namespaces according to their desired communication level.**
+     - `/<interface name>` for inter-vehicle communication topics/services
+     - `/<vehicle name>/<interface name>` for intra-vehicle, inter-system communication topics/services
+     - `/<vehicle name>/<system name>/<interface name>` for intra-vehicle, intra system communication topics/services
+4. **Use meaningful names for systems and topics/services** 
+

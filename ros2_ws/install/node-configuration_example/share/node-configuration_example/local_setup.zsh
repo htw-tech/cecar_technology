@@ -1,1 +1,0 @@
-/home/philipp/cecar-technology/ros2_ws/build/node-configuration_example/ament_cmake_environment_hooks/local_setup.zsh

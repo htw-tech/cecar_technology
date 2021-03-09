@@ -1,1 +1,0 @@
-/home/philipp/cecar-technology/ros2_ws/src/node-configuration_example/launch/demo.launch.py

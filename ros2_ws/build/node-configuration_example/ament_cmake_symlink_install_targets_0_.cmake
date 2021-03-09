@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/philipp/cecar-technology/ros2_ws/build/node-configuration_example/talker" "/home/philipp/cecar-technology/ros2_ws/build/node-configuration_example/listener" "TARGETS" "talker" "listener" "DESTINATION" "lib/node-configuration_example")

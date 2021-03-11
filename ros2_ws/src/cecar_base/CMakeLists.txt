@@ -23,6 +23,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(cecar_msgs REQUIRED)
+find_package(ackermann_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 
 ament_export_dependencies(rosidl_default_runtime)
@@ -62,11 +63,13 @@ add_executable(intelligence_collection
 ament_target_dependencies(rcu_comm
   "rclcpp"
   "cecar_msgs"
+  "ackermann_msgs"
 )
 
 ament_target_dependencies(drive
   "rclcpp"
   "cecar_msgs"
+  "ackermann_msgs"
 )
 
 ament_target_dependencies(keyboard_rc
@@ -82,17 +85,20 @@ ament_target_dependencies(gamepad_rc
 ament_target_dependencies(self_control
   "rclcpp"
   "cecar_msgs"
+  "ackermann_msgs"
 )
 
 ament_target_dependencies(self_protection
   "rclcpp"
   "cecar_msgs"
+  "ackermann_msgs"
 )
 
 ament_target_dependencies(intelligence_collection
   "rclcpp"
   "cecar_msgs"
   "nav_msgs"
+  "ackermann_msgs"
 )
 
 install(TARGETS

@@ -22,7 +22,7 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 set(msg_files
-  "ackermann_msgs/msg/AckermannDrive.msg" "wheelenc_msgs/msg/WheelEnc.msg" "cecar_status/msg/CecarStatus.msg"
+  "wheelenc_msgs/msg/WheelEnc.msg" "cecar_status/msg/CecarStatus.msg"
 )
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}

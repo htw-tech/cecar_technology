@@ -17,9 +17,9 @@ Date of creation	: 3/13/2020
 #define UART_PATH "/dev/ttyTHS2"
 
 #include "rclcpp/rclcpp.hpp"
-#include "ackermann_drive.hpp"
-#include "wheel_enc.hpp"
-#include "cecar_status.hpp"
+#include "cecar_msgs/msg/ackermann_drive.hpp"
+#include "cecar_msgs/msg/wheel_enc.hpp"
+#include "cecar_msgs/msg/cecar_status.hpp"
 
 typedef cecar_msgs::msg::AckermannDrive Ackermann_drive;
 typedef cecar_msgs::msg::WheelEnc Wheel_encoder_cecar;

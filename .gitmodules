@@ -1,5 +1,5 @@
-[submodule "ros2_ws/src/ackermann_msgs"]
-	path = ros2_ws/src/ackermann_msgs
+[submodule "ros2_ws/src/cecar_msgs/ackermann_msgs"]
+	path = ros2_ws/src/cecar_msgs/ackermann_msgs
 	url = https://github.com/ros-drivers/ackermann_msgs.git
 [submodule "ros2_ws/src/cecar_base/include/gamepad"]
 	path = ros2_ws/src/cecar_base/include/gamepad

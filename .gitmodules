@@ -1,12 +1,12 @@
 [submodule "ros2_ws/src/cecar_msgs/ackermann_msgs"]
 	path = ros2_ws/src/cecar_msgs/ackermann_msgs
 	url = https://github.com/ros-drivers/ackermann_msgs.git
-[submodule "ros2_ws/src/cecar_base/include/gamepad"]
-	path = ros2_ws/src/cecar_base/include/gamepad
-	url = https://github.com/elanthis/gamepad.git
 [submodule "rcu/Core/Inc/jsmn"]
 	path = rcu/Core/Inc/jsmn
 	url = https://github.com/zserge/jsmn.git
 [submodule "ros2_ws/src/cecar_base/include/jsmn"]
-	path = ros2/src/cecar_base/include/jsmn
+	path = ros2_ws/src/cecar_base/include/jsmn
 	url = https://github.com/zserge/jsmn.git
+[submodule "ros2_ws/src/cecar_base/include/gamepad"]
+	path = ros2_ws/src/cecar_base/include/gamepad
+	url = https://github.com/elanthis/gamepad.git

@@ -1,7 +1,7 @@
 cecar1:
   cecar_gamepad:
      ros__parameters:
-        gamepad_safe_mode_amplitude: 1.0
+        gamepad_safe_mode_amplitude: 0.6
         gamepad_steering_amplitude: 45.0
         gamepad_speed_amplitude_forwards: 3.5
         gamepad_speed_amplitude_backwards: 2.0

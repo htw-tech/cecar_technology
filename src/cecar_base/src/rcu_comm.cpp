@@ -3,7 +3,7 @@ Author(s)		: Lukas Mirow
 Date of creation	: 3/2/2020
 */
 
-#define DRIVE_MSG_LEN 45
+#define DRIVE_MSG_LEN 46
 #define DRIVE_BUF_SIZE DRIVE_MSG_LEN + 1
 #define TOKENS_EXPECTED 16
 #define LEFT_REAR_LABEL "\"rl\""
@@ -100,7 +100,7 @@ Cecar_rcu_communication::Cecar_rcu_communication(const string& path_uart) : Node
 
 void Cecar_rcu_communication::send_uart(const Ackermann_drive::SharedPtr adrive) //TODO: Reduce complexity!
 {
-	int printed_chars = sprintf(drvmsg, "{\"speed\": % 5.3f, \"steering_angle\": % 5.3f}\r\n", adrive->speed, adrive->steering_angle);
+	int printed_chars = sprintf(drvmsg, "{\"speed\": % 5.3f, \"steering_angle\": %+07.3f}\r\n", adrive->speed, adrive->steering_angle);
 	if (printed_chars != DRIVE_MSG_LEN)
 	{
 		stringstream ss;

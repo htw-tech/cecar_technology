@@ -40,7 +40,7 @@ class Cecar_gamepad : public rclcpp::Node
 		Ackermann_drive gamepad_steering_to_ackermann_drive();
 		void read_gamepad_control();
 		float read_throttle();
-		void adjust_steering();
+		float adjust_steering(float steer);
 		void publish();
 		rclcpp::Publisher<Ackermann_drive>::SharedPtr publisher;
 		rclcpp::TimerBase::SharedPtr timer;
@@ -69,14 +69,9 @@ Cecar_gamepad::Cecar_gamepad() : Node("cecar_gamepad")
 void Cecar_gamepad::publish()
 {
 	read_gamepad_control();
+
 	if (not gdir.is_zero())
 	{
-		float new_steering_left = gdir.steering_left + steering_offset;
-		if (new_steering_left < MIN_STEERING)
-			new_steering_left = MIN_STEERING;
-		else if (new_steering_left > MAX_STEERING)
-			new_steering_left = MAX_STEERING;
-		gdir.steering_left = new_steering_left; //XXX: This has to be added here because it would be detected as input in the above if directive otherwise
 		publisher->publish(gamepad_steering_to_ackermann_drive());
 	}
 	RCLCPP_INFO(get_logger(), "^: %f <>: %f", gdir.forward, gdir.steering_left);
@@ -101,8 +96,15 @@ float Cecar_gamepad::adjust_steering(float steering)
 			new_steering_offset = steering_amplitude;
 		steering_offset = new_steering_offset;
 	}
+	
+	float steer_angle = steering * steering_amplitude + steering_offset;
 
-	return steering * steering_amplitude + steering_offset
+	if(steer_angle > steering_amplitude)
+		steer_angle = steering_amplitude;
+	else if (steer_angle < (-steering_amplitude))
+		steer_angle = (-steering_amplitude);
+
+	return steer_angle;
 }
 
 float Cecar_gamepad::read_throttle()
@@ -122,7 +124,13 @@ float Cecar_gamepad::read_throttle()
 		else
 			throttle = throttle * backward_speed_amplitude; 
 	}
-	return throttle
+
+	if (throttle > forward_speed_amplitude)
+		throttle = forward_speed_amplitude;
+	else if (throttle < (-backward_speed_amplitude))
+		throttle = (-backward_speed_amplitude);
+
+	return throttle;
 }
 
 void Cecar_gamepad::read_gamepad_control()

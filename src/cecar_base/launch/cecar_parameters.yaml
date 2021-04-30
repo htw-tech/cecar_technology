@@ -1,0 +1,7 @@
+cecar1:
+   cecar_self_protection:
+     ros__parameters:
+        steering_amplitude_right: 45.0
+        steering_amplitude_left: -45.0
+        speed_amplitude_forwards: 3.5
+        speed_amplitude_backwards: -2.0

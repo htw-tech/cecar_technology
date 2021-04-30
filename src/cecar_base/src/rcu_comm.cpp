@@ -30,7 +30,6 @@ class Cecar_rcu_communication : public rclcpp::Node
 
 	private:
 		rclcpp::Subscription<Ackermann_drive>::SharedPtr subscription;
-		void apply_drive_parameters(const Ackermann_drive::SharedPtr adrive) const;
 		void send_uart(const Ackermann_drive::SharedPtr adrive);
 		void publish_wheel_encoder(const float& left_rear_wheel_encoder, const float& right_rear_wheel_encoder);
 		rclcpp::Publisher<Wheel_encoder_cecar>::SharedPtr publisher;
@@ -95,45 +94,23 @@ Cecar_rcu_communication::Cecar_rcu_communication(const string& path_uart) : Node
 	function<void(const Ackermann_drive::SharedPtr)> callback = bind(&Cecar_rcu_communication::send_uart, this, placeholders::_1);
 	subscription = create_subscription<Ackermann_drive>("cecar_drive", MSG_BUFFER_SIZE, callback);
 	publisher = create_publisher<Wheel_encoder_cecar>("cecar_rcu_wheelenc", MSG_BUFFER_SIZE);
-	declare_parameter("drive_steering_amplitude", rclcpp::ParameterValue(DRIVE_STEERING_AMPLITUDE));
-	declare_parameter("drive_speed_amplitude_forwards", rclcpp::ParameterValue(DRIVE_SPEED_AMPLITUDE_FORWARDS));
-	declare_parameter("drive_speed_amplitude_backwards", rclcpp::ParameterValue(DRIVE_SPEED_AMPLITUDE_BACKWARDS));
 	jsmn_init(&jparser);
 	timer = create_wall_timer(WHEEL_ENCODER_MSG_DELAY, bind(&Cecar_rcu_communication::wheel_encoder_callback, this));
 }
 
-void Cecar_rcu_communication::apply_drive_parameters(const Ackermann_drive::SharedPtr adrive) const
-{
-	float drive_steering_amplitude, drive_speed_amplitude_forwards, drive_speed_amplitude_backwards;
-	get_parameter("drive_steering_amplitude", drive_steering_amplitude);
-	get_parameter("drive_speed_amplitude_forwards", drive_speed_amplitude_forwards);
-	get_parameter("drive_speed_amplitude_backwards", drive_speed_amplitude_backwards);
-	if (adrive->speed > 0)
-		adrive->speed *= drive_speed_amplitude_forwards;
-	else
-		adrive->speed *= drive_speed_amplitude_backwards;
-	adrive->steering_angle *= drive_steering_amplitude;
-}
-
 void Cecar_rcu_communication::send_uart(const Ackermann_drive::SharedPtr adrive) //TODO: Reduce complexity!
 {
-	apply_drive_parameters(adrive);
-	if (adrive->speed > 1 or adrive->speed < -1 or adrive->steering_angle > 1 or adrive->steering_angle < -1)
-		RCLCPP_WARN(get_logger(), "Drive msg out of bounds -> discarded");
+	int printed_chars = sprintf(drvmsg, "{\"speed\": % 5.3f, \"steering_angle\": % 5.3f}\r\n", adrive->speed, adrive->steering_angle);
+	if (printed_chars != DRIVE_MSG_LEN)
+	{
+		stringstream ss;
+		ss << "Unexpected drive msg length: " << printed_chars << " instead of " << DRIVE_MSG_LEN << " -> discarded, drive message was: `" << drvmsg << "`";
+		RCLCPP_WARN(get_logger(), ss.str());
+	}
 	else
 	{
-		int printed_chars = sprintf(drvmsg, "{\"speed\": % 5.3f, \"steering_angle\": % 5.3f}\r\n", adrive->speed, adrive->steering_angle);
-		if (printed_chars != DRIVE_MSG_LEN)
-		{
-			stringstream ss;
-			ss << "Unexpected drive msg length: " << printed_chars << " instead of " << DRIVE_MSG_LEN << " -> discarded, drive message was: `" << drvmsg << "`";
-			RCLCPP_WARN(get_logger(), ss.str());
-		}
-		else
-		{
-			//RCLCPP_INFO(get_logger(), drvmsg);
-			uart.send(drvmsg);
-		}
+		//RCLCPP_INFO(get_logger(), drvmsg);
+		uart.send(drvmsg);
 	}
 }
 

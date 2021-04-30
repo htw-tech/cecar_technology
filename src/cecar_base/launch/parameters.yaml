@@ -1,5 +1,0 @@
-cecar_rcu_communication:
-    ros__parameters:
-        drive_steering_amplitude: 1.0
-        drive_speed_amplitude_forwards: 1.0
-        drive_speed_amplitude_backwards: 1.0

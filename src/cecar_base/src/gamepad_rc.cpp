@@ -7,8 +7,6 @@ Date of creation	: 2/13/2020
 #define STEERING_AXIS 0
 #define THRUST_AXIS 5
 #define BREAKING_AXIS 2
-#define MIN_STEERING -1.f
-#define MAX_STEERING 1.f
 
 #include <stdexcept>
 #include "gamepad.h"
@@ -62,6 +60,10 @@ Cecar_gamepad::Cecar_gamepad() : Node("cecar_gamepad")
 	GamepadInit();
 	publisher = create_publisher<Ackermann_drive>("cecar_remote_control", MSG_BUFFER_SIZE);
 	timer = create_wall_timer(DRIVE_INPUT_MSG_DELAY, bind(&Cecar_gamepad::publish, this));
+	declare_parameter("gamepad_safe_mode_amplitude");
+	declare_parameter("gamepad_speed_amplitude_forwards");
+	declare_parameter("gamepad_speed_amplitude_backwards");
+	declare_parameter("gamepad_steering_amplitude");
 }
 
 void Cecar_gamepad::publish()
@@ -80,30 +82,47 @@ void Cecar_gamepad::publish()
 	RCLCPP_INFO(get_logger(), "^: %f <>: %f", gdir.forward, gdir.steering_left);
 }
 
-void Cecar_gamepad::adjust_steering()
+float Cecar_gamepad::adjust_steering(float steering)
 {
-	float new_steering_offset;
+	float new_steering_offset, steering_amplitude;
+	get_parameter("gamepad_steering_amplitude",steering_amplitude);
+
 	if (GamepadButtonTriggered(gpd, BUTTON_DPAD_LEFT))
 	{
 		new_steering_offset = steering_offset - STEERING_OFFSET_STEP;
-		if (new_steering_offset < MIN_STEERING)
-			new_steering_offset = MIN_STEERING;
+		if (new_steering_offset < (-steering_amplitude))
+			new_steering_offset = (-steering_amplitude);
 		steering_offset = new_steering_offset;
 	}
 	else if (GamepadButtonTriggered(gpd, BUTTON_DPAD_RIGHT))
 	{
 		new_steering_offset = steering_offset + STEERING_OFFSET_STEP;
-		if (new_steering_offset > MAX_STEERING)
-			new_steering_offset = MAX_STEERING;
+		if (new_steering_offset > steering_amplitude)
+			new_steering_offset = steering_amplitude;
 		steering_offset = new_steering_offset;
 	}
+
+	return steering * steering_amplitude + steering_offset
 }
 
 float Cecar_gamepad::read_throttle()
 {
+	float safe_mode_amplitude, throttle, forward_speed_amplitude, backward_speed_amplitude;
+	get_parameter("gamepad_safe_mode_amplitude",safe_mode_amplitude);
+	get_parameter("gamepad_speed_amplitude_forwards",forward_speed_amplitude);
+	get_parameter("gamepad_speed_amplitude_backwards",backward_speed_amplitude);
+
 	if (GamepadButtonDown(gpd, BUTTON_RIGHT_SHOULDER))
-		return SAFE_DRIVING_THROTTLE;
-	return GamepadTriggerLength(gpd, TRIGGER_RIGHT) - GamepadTriggerLength(gpd, TRIGGER_LEFT);
+		return safe_mode_amplitude;
+	else {
+		throttle = GamepadTriggerLength(gpd, TRIGGER_RIGHT) - GamepadTriggerLength(gpd, TRIGGER_LEFT);
+
+		if (throttle >= 0.0)
+			throttle = throttle * forward_speed_amplitude;
+		else
+			throttle = throttle * backward_speed_amplitude; 
+	}
+	return throttle
 }
 
 void Cecar_gamepad::read_gamepad_control()
@@ -115,9 +134,8 @@ void Cecar_gamepad::read_gamepad_control()
 		//HACK: Because GamepadStickNormXY doesn't work properly for me, we are calculating x from angle and magnitude
 		stick_magnitude = GamepadStickLength(gpd, STICK_LEFT);
 		stick_angle = GamepadStickAngle(gpd, STICK_LEFT);
-		gdir.steering_left = stick_magnitude * cos(stick_angle); //FIXME: Steering was inverted - why??
+		gdir.steering_left = adjust_steering(stick_magnitude * cos(stick_angle)); //FIXME: Steering was inverted - why??
 		gdir.forward = read_throttle();
-		adjust_steering();
 	}
 	else
 	{

@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
 #Launch file for CeCar as part of my Bachelor's paper
-#Author(s)		: Lukas Mirow
-#Date of creation	: 7/27/2020
 #Modified for parameterization of namespace: Philipp Jass (3/9/2021)
 
 import os
@@ -18,7 +16,7 @@ def generate_launch_description():
 	config = os.path.join(
 	get_package_share_directory('cecar_base'),
 	'launch',
-	'parameters.yaml'
+	'cecar_parameters.yaml'
 	),
 
 	return LaunchDescription([
@@ -29,28 +27,32 @@ def generate_launch_description():
 			package='cecar_base',
 			node_namespace=LaunchConfiguration('ns'),
 			node_executable='drive',
-			output='screen'
+			output='screen',
+                        parameters = [config]
 		),
 
 		Node(
 			package='cecar_base',
 			node_namespace=LaunchConfiguration('ns'),
 			node_executable='self_protection',
-			output='screen'
+			output='screen',
+                        parameters = [config]
 		),
 
 		Node(
 			package='cecar_base',
 			node_namespace=LaunchConfiguration('ns'),
 			node_executable='self_control',
-			output='screen'
+			output='screen',
+                        parameters = [config]
 		),
 
 		Node(
 			package='cecar_base',
 			node_namespace=LaunchConfiguration('ns'),
 			node_executable='intelligence_collection',
-			output='screen'
+			output='screen',
+                        parameters = [config]
 		),
 
 		Node(
@@ -58,7 +60,7 @@ def generate_launch_description():
 			node_namespace=LaunchConfiguration('ns'),
 			node_executable='rcu_comm',
 			output='screen',
-			parameters=[config]
+                        parameters = [config]
 		)
 
 	])
